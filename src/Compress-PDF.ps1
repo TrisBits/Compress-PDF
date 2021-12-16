@@ -59,5 +59,5 @@ foreach ($pdfFile in $filesToCompress) {
     $compressedFile = Join-Path -Path $DestinationDirectory -ChildPath $pdfFile.Name
 
     $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
-    Start-Process $gs -ArgumentList $Arguments -Wait -WindowStyle hidden
+    Start-Process $gs -ArgumentList $Arguments -Wait -WindowStyle Hidden -PassThru
 }
