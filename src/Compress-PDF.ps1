@@ -5,6 +5,8 @@ Compresses PDF files
 .DESCRIPTION
 The PDF files specified in the source directory are compressed and the results placed in the destination directory.
 
+DEPENDENCY:  This script requires the application GhostScript to be installed in its default path (https://ghostscript.com/).
+
 .PARAMETER SourceDirectory
 Directory with the PDF files to compress.
 
@@ -21,10 +23,7 @@ None. You cannot pipe objects to this script.
 None
 
 .EXAMPLE
-.\Compress-PDF.ps1 -
-
-.EXAMPLE
-.\Compress-PDF.ps1 -
+.\Compress-PDF.ps1 -SourceDirectory "C:\Temp\PdfSource" -DestinationDirectory "C:\Temp\PdfDestination" -CompressionLevel ebook
 
 #>
 
@@ -101,9 +100,11 @@ function Invoke-Process {
                 }
             }
         }
-    } catch {
+    }
+    catch {
         $PSCmdlet.ThrowTerminatingError($_)
-    } finally {
+    }
+    finally {
         Remove-Item -Path $stdOutTempFile, $stdErrTempFile -Force -ErrorAction Ignore
     }
 }
@@ -113,7 +114,7 @@ function Invoke-Process {
 if (Test-Path -Path "C:\Program Files\gs") {
     $gs = (Get-ChildItem -Path "C:\Program Files\gs\*gswin64c.exe" -Recurse).FullName
 }
-elseif (Test-Path -Path "C:\Program Files (x86)\gs"){
+elseif (Test-Path -Path "C:\Program Files (x86)\gs") {
     $gs = (Get-ChildItem -Path "C:\Program Files (x86)\gs\*gswin32c.exe" -Recurse).FullName
 }
 else {
