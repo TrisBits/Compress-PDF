@@ -9,7 +9,22 @@
 - Download the code as a zip file.
 - Unzip the contents to a location of your choosing.
 - Open a PowerShell window and browse to the location of the Compress-PDF.ps1 script. Alternatively you can execute the script by specifying the full path.
-- Execute the script by following the examples below. If you recieve the error "not digitally signed" you will first need to execute the command Unblock-File -Path .\Compress-PDF.ps1
+- Execute the script by following the usage examples below. If you recieve the error "not digitally signed" you will first need to execute the command Unblock-File -Path .\Compress-PDF.ps1
+
+## Parameters
+
+- `SourceDirectory`
+
+  Directory with the PDF files to compress.
+
+- `DestinationDirectory`
+
+  Directory where the compressed PDF files will be saved.
+
+- `CompressionLevel`
+
+  The level of compression to apply to the PDF.  Choices are **screen**, **ebook**, **printer**, **prepress** (most compression -> least compression).
+  If the parameter is not included the GhostScript **default** compression level will be used.
 
 ## Usage Examples
 
