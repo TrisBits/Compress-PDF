@@ -127,6 +127,11 @@ else {
 }
 
 $filesToCompress = Get-ChildItem -Path $SourceDirectory -Filter *.pdf
+if ($filesToCompress.Count -eq 0) {
+    Write-Warning -Message "No PDF files present in the source directory"
+    Exit
+}
+
 
 # Initialize Progress Bar
 [int]$percentIncrement = 100 / $filesToCompress.Count
