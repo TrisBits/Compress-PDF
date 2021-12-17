@@ -4,6 +4,13 @@
 
 - This script requires the application GhostScript to be installed in its default path (<https://ghostscript.com/>).
 
+## Instructions
+
+- Download the code as a zip file.
+- Unzip the contents to a location of your choosing.
+- Open a PowerShell window and browse to the location of the Compress-PDF.ps1 script. Alternatively you can execute the script by specifying the full path.
+- Execute the script by following the examples below. If you recieve the error "not digitally signed" you will first need to execute the command Unblock-File -Path .\Compress-PDF.ps1
+
 ## Usage Examples
 
 **Example 1:**
