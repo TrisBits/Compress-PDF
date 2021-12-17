@@ -83,7 +83,8 @@ function Invoke-Process {
             RedirectStandardOutput = $stdOutTempFile
             Wait                   = $true;
             PassThru               = $true;
-            NoNewWindow            = $true;
+            #NoNewWindow           = $true;
+            WindowStyle            = "Hidden"
         }
 
         if ($PSCmdlet.ShouldProcess("Process [$($FilePath)]", "Run with args: [$($ArgumentList)]")) {
@@ -127,10 +128,25 @@ else {
 
 $filesToCompress = Get-ChildItem -Path $SourceDirectory -Filter *.pdf
 
+# Initialize Progress Bar
+[int]$percentIncrement = 100 / $filesToCompress.Count
+[int]$percentCurrent = 0
+
+Write-Host "PDF File Compression Starting" -ForegroundColor Green
+
 foreach ($pdfFile in $filesToCompress) {
     $compressedFile = Join-Path -Path $DestinationDirectory -ChildPath $pdfFile.Name
 
-    $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
+    Write-Progress -Activity 'Compress PDF Files' -Status "$($percentCurrent)% Complete" -PercentComplete $percentCurrent -CurrentOperation "Processing file:  $($pdfFile.Name)"
     Write-Host "Processing file $($pdfFile.Name)" -ForegroundColor Cyan
+
+    $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
     Invoke-Process -FilePath $gs -ArgumentList $arguments
+
+    $percentCurrent = $percentCurrent + $percentIncrement
 }
+
+$percentCurrent = 100
+Write-Progress -Activity 'Compress PDF Files' -Status "$($percentCurrent)% Complete" -PercentComplete $percentCurrent -CurrentOperation "Finished"
+
+Write-Host "PDF File Compression Complete" -ForegroundColor Green
