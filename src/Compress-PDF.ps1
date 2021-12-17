@@ -25,6 +25,9 @@ None
 .EXAMPLE
 .\Compress-PDF.ps1 -SourceDirectory "C:\Temp\PdfSource" -DestinationDirectory "C:\Temp\PdfDestination" -CompressionLevel ebook
 
+.EXAMPLE
+.\Compress-PDF.ps1 -SourceDirectory "C:\Temp\PdfSource" -DestinationDirectory "C:\Temp\PdfDestination"
+
 #>
 
 
