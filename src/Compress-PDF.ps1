@@ -145,7 +145,7 @@ foreach ($pdfFile in $filesToCompress) {
     Write-Progress -Activity 'Compress PDF Files' -Status "$($percentCurrent)% Complete" -PercentComplete $percentCurrent -CurrentOperation "Processing file:  $($pdfFile.Name)"
     Write-Host "Processing file $($pdfFile.Name)" -ForegroundColor Cyan
 
-    $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
+    $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -dNEWPDF -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
     Invoke-Process -FilePath $gs -ArgumentList $arguments
 
     $percentCurrent = $percentCurrent + $percentIncrement
