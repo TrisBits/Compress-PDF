@@ -134,21 +134,21 @@ if ($filesToCompress.Count -eq 0) {
 
 
 # Initialize Progress Bar
-[int]$percentIncrement = 100 / $filesToCompress.Count
-[int]$percentCurrent = 0
+[decimal]$percentIncrement = 100 / $filesToCompress.Count
+[decimal]$percentCurrent = 0
 
 Write-Host "PDF File Compression Starting" -ForegroundColor Green
 
 foreach ($pdfFile in $filesToCompress) {
     $compressedFile = Join-Path -Path $DestinationDirectory -ChildPath $pdfFile.Name
 
-    Write-Progress -Activity 'Compress PDF Files' -Status "$($percentCurrent)% Complete" -PercentComplete $percentCurrent -CurrentOperation "Processing file:  $($pdfFile.Name)"
+    Write-Progress -Activity 'Compress PDF Files' -Status "$([Math]::Floor($percentCurrent))% Complete" -PercentComplete $percentCurrent -CurrentOperation "Processing file:  $($pdfFile.Name)"
     Write-Host "Processing file $($pdfFile.Name)" -ForegroundColor Cyan
 
     $arguments = "-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$($CompressionLevel) -dNOPAUSE -dQUIET -dBATCH -dNEWPDF -sOutputFile=`"$($compressedFile)`" `"$($pdfFile.FullName)`""
     Invoke-Process -FilePath $gs -ArgumentList $arguments
 
-    $percentCurrent = $percentCurrent + $percentIncrement
+    $percentCurrent += $percentIncrement
 }
 
 $percentCurrent = 100
